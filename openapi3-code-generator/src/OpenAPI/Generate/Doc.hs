@@ -265,7 +265,7 @@ addModelModuleHeader mainModuleName moduleName modelModulesToImport description 
     . importQualified "GHC.Types"
     . importQualified (mainModuleName <> ".Common")
     . (if moduleName == typeAliasModule then id else importUnqualified (mainModuleName <> "." <> typeAliasModule))
-    . (vcat (fmap (text . ("import {-# SOURCE #-} " <>) . ((mainModuleName <> ".") <>)) modelModulesToImport) $$)
+    . (vcat (fmap (text . ("import " <>) . ((mainModuleName <> ".") <>)) modelModulesToImport) $$)
     . emptyLine
 
 -- | Add the module header to the security scheme module
