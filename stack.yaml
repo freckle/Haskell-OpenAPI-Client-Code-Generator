@@ -2,7 +2,7 @@ resolver: lts-21.22
 packages:
 - openapi3-code-generator
 
-system-ghc: true
-nix:
-  enable: false
-with-hpack: hpack
+# system-ghc: true
+# nix:
+#   enable: false
+# with-hpack: hpack
