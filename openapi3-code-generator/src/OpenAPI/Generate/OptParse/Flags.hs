@@ -15,6 +15,7 @@ import Options.Applicative
 data Flags = Flags
   { flagConfiguration :: !(Maybe Text),
     flagOpenApiSpecification :: !(Maybe Text),
+    flagSpecificationFormat :: !(Maybe SpecificationFormat),
     flagOutputDir :: !(Maybe Text),
     flagPackageName :: !(Maybe Text),
     flagModuleName :: !(Maybe Text),
@@ -54,6 +55,7 @@ parseFlags =
   Flags
     <$> parseFlagConfiguration
     <*> parseFlagOpenApiSpecification
+    <*> parseFlagSpecificationFormat
     <*> parseFlagOutputDir
     <*> parseFlagPackageName
     <*> parseFlagModuleName
@@ -114,6 +116,16 @@ parseFlagOpenApiSpecification =
                   long "specification"
                 ]
             )
+
+parseFlagSpecificationFormat :: Parser (Maybe SpecificationFormat)
+parseFlagSpecificationFormat =
+  optional $
+    option auto $
+      mconcat
+        [ metavar "yaml|json",
+          help "Set the specification file format.",
+          long "spec-format"
+        ]
 
 parseFlagOutputDir :: Parser (Maybe Text)
 parseFlagOutputDir =

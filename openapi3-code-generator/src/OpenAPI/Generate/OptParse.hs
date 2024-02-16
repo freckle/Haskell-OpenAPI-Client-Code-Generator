@@ -37,6 +37,9 @@ getSettings = do
 data Settings = Settings
   { -- | The OpenAPI 3 specification file which code should be generated for.
     settingOpenApiSpecification :: !Text,
+    -- | Force the format as json or yaml. This is useful if piping in, where
+    -- a file extension is not available to guess.
+    settingSpecificationFormat :: !(Maybe SpecificationFormat),
     -- | The directory where the generated output is stored.
     settingOutputDir :: !Text,
     -- | Name of the stack project
@@ -123,6 +126,7 @@ combineToSettings Flags {..} mConf configurationFilePath = do
   mConfigOpenApiSpecification <- resolveRelativeToConfiguration $ mc configOpenApiSpecification
   mConfigOutputDir <- resolveRelativeToConfiguration $ mc configOutputDir
   let settingOpenApiSpecification = fromMaybe "openapi-specification.yml" $ flagOpenApiSpecification <|> mConfigOpenApiSpecification
+      settingSpecificationFormat = flagSpecificationFormat
       settingOutputDir = fromMaybe "out" $ flagOutputDir <|> mConfigOutputDir
       settingPackageName = fromMaybe "openapi" $ flagPackageName <|> mc configPackageName
       settingModuleName = fromMaybe "OpenAPI" $ flagModuleName <|> mc configModuleName

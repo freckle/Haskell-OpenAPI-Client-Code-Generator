@@ -1,5 +1,7 @@
 module OpenAPI.Generate.OptParse.Types
   ( FixedValueStrategy (..),
+    SpecificationFormat(..),
+    specificationFormatByExtension
   )
 where
 
@@ -19,3 +21,24 @@ instance Read FixedValueStrategy where
 
 instance HasCodec FixedValueStrategy where
   codec = shownBoundedEnumCodec
+
+data SpecificationFormat = SpecificationFormatYaml | SpecificationFormatJSON
+  deriving (Eq, Bounded, Enum)
+
+instance Show SpecificationFormat where
+  show SpecificationFormatYaml = "yaml"
+  show SpecificationFormatJSON = "json"
+
+instance Read SpecificationFormat where
+  readsPrec _ ('y' : 'a' : 'm' : 'l': rest) = [(SpecificationFormatYaml, rest)]
+  readsPrec _ ('j' : 's' : 'o' : 'n': rest) = [(SpecificationFormatJSON, rest)]
+  readsPrec _ _ = []
+
+instance HasCodec SpecificationFormat where
+  codec = shownBoundedEnumCodec
+
+specificationFormatByExtension :: String -> Maybe SpecificationFormat
+specificationFormatByExtension ".yaml" = Just SpecificationFormatYaml
+specificationFormatByExtension ".yml" = Just SpecificationFormatYaml
+specificationFormatByExtension ".json" = Just SpecificationFormatJSON
+specificationFormatByExtension _ = Nothing
