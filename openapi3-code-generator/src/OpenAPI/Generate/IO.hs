@@ -59,7 +59,7 @@ cabalProjectFiles packageName moduleName modulesToExport =
                "      src",
                "  build-depends:",
                "      base >=4.7 && <5",
-               "    , text",
+               "    , text >= 2.0.2",
                "    , ghc-prim",
                "    , http-conduit",
                "    , http-client",
