@@ -730,7 +730,7 @@ createFromJSONImplementation objectName recordNames required =
                   readPropE =
                     if propName `Set.member` required
                       then [|$arg Aeson..: $propName'|]
-                      else [|$arg Aeson..:! $propName'|]
+                      else [|$arg Aeson..:? $propName'|]
                in [|$prev <*> $readPropE|]
           )
           [|pure $(varE objectName)|]
